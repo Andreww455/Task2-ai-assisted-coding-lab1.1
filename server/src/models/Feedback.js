@@ -4,9 +4,17 @@ import mongoose from 'mongoose';
 
 const feedbackSchema = new mongoose.Schema(
   {
-    // TODO
+    workshopCode :{type: String, required:true},
+    score: {type:Number, required:true, min:1, max:5},
+    comment: {type:String, required:false},
+    submittedBy: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: false,}
   },
   { timestamps: true }
+);
+
+feedbackSchema.index(
+  { workshopCode: 1, submittedBy: 1 },
+  { unique: true }
 );
 
 // TODO: add the compound uniqueness constraint described in README.md section 1.
